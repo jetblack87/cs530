@@ -12,10 +12,15 @@ import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 
+import org.dataart.view.audio.AudioPanel;
+import org.dataart.view.data.DataPanel;
+import org.dataart.view.games.GamesPanel;
 import org.dataart.view.imprt.ImportDialog;
+import org.dataart.view.visual.VisualPanel;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 
 @SuppressWarnings("serial")
 public class MainWindow extends JFrame {
@@ -26,6 +31,7 @@ public class MainWindow extends JFrame {
 	 * Create the frame.
 	 */
 	public MainWindow() {
+		setTitle(org.dataart.DataArt.class.getSimpleName());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		
@@ -78,6 +84,8 @@ public class MainWindow extends JFrame {
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		contentPane.add(tabbedPane, BorderLayout.CENTER);
+		
+		loadTabs(tabbedPane, mnPlay);
 	}
 	
 	
@@ -92,7 +100,16 @@ public class MainWindow extends JFrame {
 		dialog.setVisible(true);
 	}
 	
-	private void loadTabs() {
+	private void loadTabs(JTabbedPane tabbedPane, JMenu playMenu) {
+		ArrayList<IMainWindowSubpanel> subpanels = new ArrayList<IMainWindowSubpanel>();
 		
+		subpanels.add(new DataPanel());
+		subpanels.add(new VisualPanel());
+		subpanels.add(new AudioPanel());
+		subpanels.add(new GamesPanel());
+		
+		for (IMainWindowSubpanel subpanel : subpanels){
+			subpanel.addThisPanel(tabbedPane, playMenu);
+		}
 	}
 }
