@@ -3,6 +3,7 @@ package org.dataart.view.imprt;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -10,8 +11,15 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
+
+import org.dataart.model.Data;
+import org.dataart.view.ASubpanel;
+import org.dataart.view.imprt.subpanels.AImportSubpanel;
+import org.dataart.view.imprt.subpanels.FilesystemSubpanel;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.CardLayout;
 
 @SuppressWarnings("serial")
 public class ImportDialog extends JDialog {
@@ -21,12 +29,15 @@ public class ImportDialog extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public ImportDialog() {
+	public ImportDialog(final Data data) {
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(new BorderLayout(0, 0));
+		final JPanel cardLayoutPanel;
+		final JComboBox<ASubpanel> sourceTypesComboBox;
+		final DefaultComboBoxModel<ASubpanel> sourceTypeComboBoxModel = new DefaultComboBoxModel<ASubpanel>();
 		{
 			JPanel sourceTypePanel = new JPanel();
 			contentPanel.add(sourceTypePanel, BorderLayout.NORTH);
@@ -36,9 +47,15 @@ public class ImportDialog extends JDialog {
 				sourceTypePanel.add(lblSourceType);
 			}
 			{
-				JComboBox sourceTypesComboBox = new JComboBox();
+				sourceTypesComboBox = new JComboBox<ASubpanel>();
+				sourceTypesComboBox.setModel(sourceTypeComboBoxModel);
 				sourceTypePanel.add(sourceTypesComboBox);
 			}
+		}
+		{
+			cardLayoutPanel = new JPanel();
+			contentPanel.add(cardLayoutPanel, BorderLayout.CENTER);
+			cardLayoutPanel.setLayout(new CardLayout(0, 0));
 		}
 		{
 			JPanel buttonPane = new JPanel();
@@ -46,6 +63,11 @@ public class ImportDialog extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton importButton = new JButton("Import");
+				importButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						importData(data, (AImportSubpanel)sourceTypesComboBox.getSelectedItem());
+					}
+				});
 				importButton.setActionCommand("Import");
 				buttonPane.add(importButton);
 				getRootPane().setDefaultButton(importButton);
@@ -61,10 +83,22 @@ public class ImportDialog extends JDialog {
 				buttonPane.add(cancelButton);
 			}
 		}
+		
+		loadPanels(cardLayoutPanel, sourceTypeComboBoxModel);
+	}
+	
+	private void loadPanels(JPanel cardLayoutPanel, DefaultComboBoxModel<ASubpanel> sourceTypeComboBoxModel) {
+		new FilesystemSubpanel().addThisPanelToCardLayoutPanelAndComboBoxModel(cardLayoutPanel, sourceTypeComboBoxModel);
 	}
 	
 	private void cancelImport() {
 		this.dispose();
 	}
-
+	
+	private void importData(Data data, AImportSubpanel panel) {
+		Data returnData = panel.importData();
+		data.clear();
+		data.addAll(returnData);
+		this.dispose();
+	}
 }
