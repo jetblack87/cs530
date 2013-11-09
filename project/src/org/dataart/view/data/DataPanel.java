@@ -1,26 +1,13 @@
 package org.dataart.view.data;
 
-import javax.swing.JMenu;
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
-
-import org.dataart.view.IMainWindowSubpanel;
+import org.dataart.view.AMainWindowSubpanel;
 
 @SuppressWarnings("serial")
-public class DataPanel extends JPanel implements IMainWindowSubpanel {
-
-	private final static String PANEL_TITLE = "Data";
-	
+public class DataPanel extends AMainWindowSubpanel {
 	/**
 	 * Create the panel.
 	 */
 	public DataPanel() {
-
+		PANEL_TITLE = "Data";
 	}
-	
-	@Override
-	public void addThisPanel(JTabbedPane tabbedPane, JMenu playMenu){
-		tabbedPane.add(PANEL_TITLE, this);
-	}
-
 }
