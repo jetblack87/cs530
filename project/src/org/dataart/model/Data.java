@@ -5,10 +5,38 @@ import java.util.HashMap;
 
 @SuppressWarnings("serial")
 public class Data extends ArrayList<HashMap<String, Object>> {
+	private String dataSource;
+	
 	public static enum DATA_TYPES {
 		INVALID, CALENDAR, DOUBLE, FLOAT, INTEGER, LONG, PATH, STRING
 	};
 
+	public Data() {
+		super();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Data(Data copyData) {
+		for(HashMap<String, Object> element : copyData) {
+			this.add((HashMap<String, Object>)element.clone());
+		}
+		dataSource = copyData.getDataSource();
+	}
+	
+	/**
+	 * @return the dataSource
+	 */
+	public String getDataSource() {
+		return dataSource;
+	}
+
+	/**
+	 * @param dataSource the dataSource to set
+	 */
+	public void setDataSource(String dataSource) {
+		this.dataSource = dataSource;
+	}
+	
 	/**
 	 * Returns the type of Object obj. Uses 'instanceof'.
 	 * @param obj Object to test
@@ -49,5 +77,25 @@ public class Data extends ArrayList<HashMap<String, Object>> {
 		} else {
 			return false;
 		}
+	}
+	
+	public static Number getNumberValue(Object obj) {
+			switch(getDataType(obj)) {
+			case CALENDAR:
+				return ((java.util.Calendar)obj).getTimeInMillis();
+			case DOUBLE:
+				return (Double)obj;
+			case FLOAT:
+				return (Float)obj;
+			case INTEGER:
+				return (Integer)obj;
+			case PATH:
+				return ((java.nio.file.Path)obj).toString().length();
+			case LONG:
+				return (Long)obj;
+			case STRING:
+				return ((String)obj).length();
+		}
+		return null;
 	}
 }

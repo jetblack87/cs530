@@ -1,11 +1,13 @@
 package org.dataart.view.imprt;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.FlowLayout;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.BoxLayout;
@@ -14,8 +16,6 @@ import javax.swing.JComboBox;
 
 import org.dataart.model.Data;
 import org.dataart.view.ASubpanel;
-import org.dataart.view.imprt.subpanels.AImportSubpanel;
-import org.dataart.view.imprt.subpanels.FilesystemSubpanel;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -26,6 +26,8 @@ public class ImportDialog extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 
+	private int OK_CANCEL_OPTION = JOptionPane.CANCEL_OPTION;
+	
 	/**
 	 * Create the dialog.
 	 */
@@ -92,6 +94,7 @@ public class ImportDialog extends JDialog {
 	}
 	
 	private void cancelImport() {
+		OK_CANCEL_OPTION = JOptionPane.CANCEL_OPTION;
 		this.dispose();
 	}
 	
@@ -99,6 +102,15 @@ public class ImportDialog extends JDialog {
 		Data returnData = panel.importData();
 		data.clear();
 		data.addAll(returnData);
+		data.setDataSource(returnData.getDataSource());
+		OK_CANCEL_OPTION = JOptionPane.OK_OPTION;
 		this.dispose();
+	}
+	
+	public int showImportDialog(Component parentComponent) {
+		this.setModal(true);
+		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		this.setVisible(true);
+		return OK_CANCEL_OPTION;
 	}
 }
