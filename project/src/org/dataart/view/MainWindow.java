@@ -1,23 +1,24 @@
 package org.dataart.view;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JDialog;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 
 import org.dataart.model.Data;
 import org.dataart.view.data.DataPanel;
 import org.dataart.view.imprt.ImportDialog;
-import org.dataart.view.output.audio.AudioPanel;
-import org.dataart.view.output.games.GamesPanel;
-import org.dataart.view.output.visual.VisualPanel;
+import org.dataart.view.output.AudioSubpanel;
+import org.dataart.view.output.GamesSubpanel;
+import org.dataart.view.output.VisualSubpanel;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -38,6 +39,7 @@ public class MainWindow extends JFrame {
 		setTitle(org.dataart.DataArt.class.getSimpleName());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
+		setExtendedState(MAXIMIZED_BOTH);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -56,11 +58,14 @@ public class MainWindow extends JFrame {
 		
 		JSeparator separator = new JSeparator();
 		mnFile.add(separator);
+
+		final JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+
 		
 		JMenuItem mntmImport = new JMenuItem("Import...");
 		mntmImport.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				openImportDialog();
+				openImportDialog(tabbedPane);
 			}
 		});
 		mnFile.add(mntmImport);
@@ -86,7 +91,7 @@ public class MainWindow extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setEnabled(false);
 		contentPane.add(tabbedPane, BorderLayout.CENTER);
 		
 		loadTabs(tabbedPane, mnPlay);
@@ -97,17 +102,21 @@ public class MainWindow extends JFrame {
 		System.exit(exitCode);
 	}
 	
-	private void openImportDialog() {
+	private void openImportDialog(JTabbedPane tabbedPane) {
 		ImportDialog dialog = new ImportDialog(data);
-		dialog.setModal(true);
-		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		dialog.setVisible(true);
+		if(dialog.showImportDialog(this) == JOptionPane.OK_OPTION && data.size() > 0) {
+			tabbedPane.setEnabled(true);
+			
+			for (Component subpanel : tabbedPane.getComponents()) {
+				((ASubpanel)subpanel).setData(data);
+			}
+		}
 	}
 	
 	private void loadTabs(JTabbedPane tabbedPane, JMenu playMenu) {
 		new DataPanel().addThisPanelToTabbedPaneAndJMenu(tabbedPane, playMenu);
-		new VisualPanel().addThisPanelToTabbedPaneAndJMenu(tabbedPane, playMenu);
-		new AudioPanel().addThisPanelToTabbedPaneAndJMenu(tabbedPane, playMenu);
-		new GamesPanel().addThisPanelToTabbedPaneAndJMenu(tabbedPane, playMenu);
+		new VisualSubpanel().addThisPanelToTabbedPaneAndJMenu(tabbedPane, playMenu);
+		new AudioSubpanel().addThisPanelToTabbedPaneAndJMenu(tabbedPane, playMenu);
+		new GamesSubpanel().addThisPanelToTabbedPaneAndJMenu(tabbedPane, playMenu);
 	}
 }
