@@ -3,8 +3,9 @@ package org.dataart.model;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-@SuppressWarnings("serial")
 public class Data extends ArrayList<HashMap<String, Object>> {
+	private static final long serialVersionUID = -217164243199684615L;
+	
 	private String dataSource;
 	
 	public static enum DATA_TYPES {

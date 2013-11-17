@@ -9,6 +9,6 @@ public abstract class AMainWindowSubpanel extends ASubpanel {
 
 	public void addThisPanelToTabbedPaneAndJMenu(JTabbedPane tabbedPane, JMenu playMenu){
 		tabbedPane.add(PANEL_TITLE, this);
-		playMenu.add(new JMenuItem(PANEL_TITLE));
+		playMenu.add(new JMenuItem(PANEL_TITLE + " (not implemented)"));
 	}
 }
