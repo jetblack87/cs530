@@ -12,7 +12,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
-
 import org.dataart.model.Data;
 import org.dataart.view.data.DataPanel;
 import org.dataart.view.imprt.ImportDialog;
@@ -29,6 +28,8 @@ public class MainWindow extends JFrame {
 	private JPanel contentPane;
 	
 	private Data data;
+
+	private JTabbedPane tabbedPane;
 
 	/**
 	 * Create the frame.
@@ -47,19 +48,26 @@ public class MainWindow extends JFrame {
 		JMenu mnFile = new JMenu("File");
 		menuBar.add(mnFile);
 		
-		JMenuItem mntmNewProject = new JMenuItem("New Project");
-		mnFile.add(mntmNewProject);
-		
-		JMenuItem mntmOpenProject = new JMenuItem("Open Project");
+		JMenuItem mntmOpenProject = new JMenuItem("Open Project (not implemented)");
+		mntmOpenProject.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+//				loadData();
+			}
+		});
 		mnFile.add(mntmOpenProject);
 		
-		JMenuItem mntmSaveProject = new JMenuItem("Save Project");
+		JMenuItem mntmSaveProject = new JMenuItem("Save Project (not implemented)");
+		mntmSaveProject.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+//				saveData(); 
+			}
+		});
 		mnFile.add(mntmSaveProject);
 		
 		JSeparator separator = new JSeparator();
 		mnFile.add(separator);
 
-		final JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 
 		
 		JMenuItem mntmImport = new JMenuItem("Import...");
@@ -80,9 +88,6 @@ public class MainWindow extends JFrame {
 			}
 		});
 		mnFile.add(mntmExit);
-		
-		JMenu mnEdit = new JMenu("Edit");
-		menuBar.add(mnEdit);
 		
 		JMenu mnPlay = new JMenu("Play");
 		menuBar.add(mnPlay);
@@ -119,4 +124,49 @@ public class MainWindow extends JFrame {
 		new AudioSubpanel().addThisPanelToTabbedPaneAndJMenu(tabbedPane, playMenu);
 		new GamesSubpanel().addThisPanelToTabbedPaneAndJMenu(tabbedPane, playMenu);
 	}
+	
+//	private void saveData() {
+////		try {
+////			FileDialog saveDialog = new FileDialog(this, "Save Project", FileDialog.SAVE);
+////			saveDialog.setVisible(true);
+////			File file = saveDialog.getFiles()[0];
+////			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
+////			oos.writeObject(data);
+////			oos.close();
+////		} catch (IOException e) {
+////			// TODO Auto-generated catch block
+////			e.printStackTrace();
+////		}
+//		
+//		try {
+//			JAXBContext jaxbContext = JAXBContext.newInstance(Data.class);
+//		    Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+//		    jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+//		    jaxbMarshaller.marshal(data, new File("/tmp/dataart.xml"));		
+//		} catch (JAXBException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
+//	
+//	private void loadData() {
+//		try {
+//			FileDialog loadDialog = new FileDialog(this, "Load Project", FileDialog.LOAD);
+//			loadDialog.setVisible(true);
+//			File file = loadDialog.getFiles()[0];
+//			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
+//			data = (Data) ois.readObject();
+//			data.setDataSource("Project Load");
+//			ois.close();
+//
+//			tabbedPane.setEnabled(true);
+//			
+//			for (Component subpanel : tabbedPane.getComponents()) {
+//				((ASubpanel)subpanel).setData(data);
+//			}
+//		} catch (IOException | ClassNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
 }

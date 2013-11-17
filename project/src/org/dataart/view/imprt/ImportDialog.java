@@ -37,7 +37,9 @@ public class ImportDialog extends JDialog {
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(new BorderLayout(0, 0));
-		final JPanel cardLayoutPanel;
+		final JPanel cardLayoutPanel = new JPanel();
+		contentPanel.add(cardLayoutPanel, BorderLayout.CENTER);
+		cardLayoutPanel.setLayout(new CardLayout(0, 0));
 		final JComboBox<ASubpanel> sourceTypesComboBox;
 		final DefaultComboBoxModel<ASubpanel> sourceTypeComboBoxModel = new DefaultComboBoxModel<ASubpanel>();
 		{
@@ -50,14 +52,15 @@ public class ImportDialog extends JDialog {
 			}
 			{
 				sourceTypesComboBox = new JComboBox<ASubpanel>();
+				sourceTypesComboBox.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+					    CardLayout cl = (CardLayout)(cardLayoutPanel.getLayout());
+					    cl.show(cardLayoutPanel, sourceTypesComboBox.getSelectedItem().toString());
+					}
+				});
 				sourceTypesComboBox.setModel(sourceTypeComboBoxModel);
 				sourceTypePanel.add(sourceTypesComboBox);
 			}
-		}
-		{
-			cardLayoutPanel = new JPanel();
-			contentPanel.add(cardLayoutPanel, BorderLayout.CENTER);
-			cardLayoutPanel.setLayout(new CardLayout(0, 0));
 		}
 		{
 			JPanel buttonPane = new JPanel();
@@ -91,6 +94,7 @@ public class ImportDialog extends JDialog {
 	
 	private void loadPanels(JPanel cardLayoutPanel, DefaultComboBoxModel<ASubpanel> sourceTypeComboBoxModel) {
 		new FilesystemSubpanel().addThisPanelToCardLayoutPanelAndComboBoxModel(cardLayoutPanel, sourceTypeComboBoxModel);
+		new LetterCountSubpanel().addThisPanelToCardLayoutPanelAndComboBoxModel(cardLayoutPanel, sourceTypeComboBoxModel);
 	}
 	
 	private void cancelImport() {
