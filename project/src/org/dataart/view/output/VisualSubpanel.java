@@ -5,8 +5,8 @@ import javax.swing.JPanel;
 
 import org.dataart.view.AMainWindowSubpanel;
 import org.dataart.view.ASubpanel;
-import org.dataart.view.output.visual.subpanels.AVisualSubpanel;
-import org.dataart.view.output.visual.subpanels.BubbleGraphSubpanel;
+import org.dataart.view.output.visual.AVisualSubpanel;
+import org.dataart.view.output.visual.BubbleGraphSubpanel;
 
 import java.awt.BorderLayout;
 import javax.swing.JButton;

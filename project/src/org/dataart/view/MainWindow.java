@@ -16,7 +16,7 @@ import org.dataart.model.Data;
 import org.dataart.view.data.DataPanel;
 import org.dataart.view.imprt.ImportDialog;
 import org.dataart.view.output.AudioSubpanel;
-import org.dataart.view.output.GamesSubpanel;
+import org.dataart.view.output.GameSubpanel;
 import org.dataart.view.output.VisualSubpanel;
 
 import java.awt.event.ActionListener;
@@ -122,7 +122,7 @@ public class MainWindow extends JFrame {
 		new DataPanel().addThisPanelToTabbedPaneAndJMenu(tabbedPane, playMenu);
 		new VisualSubpanel().addThisPanelToTabbedPaneAndJMenu(tabbedPane, playMenu);
 		new AudioSubpanel().addThisPanelToTabbedPaneAndJMenu(tabbedPane, playMenu);
-		new GamesSubpanel().addThisPanelToTabbedPaneAndJMenu(tabbedPane, playMenu);
+		new GameSubpanel().addThisPanelToTabbedPaneAndJMenu(tabbedPane, playMenu);
 	}
 	
 //	private void saveData() {
