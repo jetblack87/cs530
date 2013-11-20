@@ -19,9 +19,9 @@ import javax.swing.JSeparator;
 
 import org.dataart.view.AMainWindowSubpanel;
 import org.dataart.view.ASubpanel;
-import org.dataart.view.output.audio.subpanels.AAudioSubpanel;
-import org.dataart.view.output.audio.subpanels.ADSRSubpanel;
-import org.dataart.view.output.audio.subpanels.BasicMIDISubpanel;
+import org.dataart.view.output.audio.AAudioSubpanel;
+import org.dataart.view.output.audio.ADSRSubpanel;
+import org.dataart.view.output.audio.BasicMIDISubpanel;
 
 import javax.swing.JProgressBar;
 
