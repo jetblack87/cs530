@@ -76,7 +76,7 @@ public class FilesystemSubpanel extends AImportSubpanel {
 		inputPanel.add(textDirectoryBase, gbc_textDirectoryBase);
 		textDirectoryBase.setColumns(10);
 		
-		JButton btnBrowse = new JButton("Browse");
+		JButton btnBrowse = new JButton("Browse for Folder");
 		btnBrowse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			    JFileChooser chooser = new JFileChooser();
@@ -112,7 +112,7 @@ public class FilesystemSubpanel extends AImportSubpanel {
 		inputPanel.add(textFileselectPattern, gbc_textFileselectPattern);
 		textFileselectPattern.setColumns(10);
 		
-		JButton btnFetch = new JButton("Fetch");
+		JButton btnFetch = new JButton("Fetch Files");
 		btnFetch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				((Component) e.getSource()).setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
