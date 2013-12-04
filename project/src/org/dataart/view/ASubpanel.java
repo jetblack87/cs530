@@ -39,7 +39,6 @@ public abstract class ASubpanel extends JPanel {
 		updatePanel();
 		for(ASubpanel subpanel : subpanels) {
 			subpanel.setData(data);
-			subpanel.updatePanel();
 		}
 	}
 	

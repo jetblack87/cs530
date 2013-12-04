@@ -37,7 +37,7 @@ public class LetterCountSubpanel extends AImportSubpanel {
 		JPanel inputPanel = new JPanel();
 		add(inputPanel, BorderLayout.NORTH);
 		
-		JButton btnBrowse = new JButton("Browse");
+		JButton btnBrowse = new JButton("Browse for File");
 		btnBrowse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				((Component) arg0.getSource()).setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));

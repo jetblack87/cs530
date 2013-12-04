@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.io.File;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
@@ -197,7 +198,6 @@ public class BasicMIDISubpanel extends AAudioSubpanel {
 							AudioHelper.getNote(newLower, newNote),
 							AudioHelper.getVelocity(newLower, newVelocity));
 	                track.add(new MidiEvent(myMsg, tick));
-
 	            } catch (Exception ex) { ex.printStackTrace(); }            	
                 
                 tick+=4;
@@ -205,6 +205,8 @@ public class BasicMIDISubpanel extends AAudioSubpanel {
             sequencer.setSequence(sequence);
             sequencer.open();
             sequencer.setTempoInBPM(tempoSpinnerModel.getNumber().intValue());
+            
+            MidiSystem.write(sequence, MidiSystem.getMidiFileTypes(sequence)[0], new File("/tmp/audio.midi"));
 	    } catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -266,7 +268,7 @@ public class BasicMIDISubpanel extends AAudioSubpanel {
 		private static int getVelocity(int lowerBound, int noteNumber) {
 			return ((noteNumber - lowerBound) % (MAX_VELOCITY - MIN_VELOCITY)) + MIN_VELOCITY;
 		}
-		private static String noteNumToNoteString(int noteNumber){
+		private static String noteNumToNoteString(int noteNumber) {
 	        String notes = "C C#D D#E F F#G G#A A#B ";
 	        return notes.substring((noteNumber % 12) * 2,
 	                (noteNumber % 12) * 2 + 2).trim();
